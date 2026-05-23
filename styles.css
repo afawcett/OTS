@@ -453,27 +453,35 @@ h1 {
   .hero {
     grid-template-columns: 1fr;
     padding-top: 48px;
+    padding-bottom: 0;
   }
 
   .hero-art {
-    min-height: 520px;
+    min-height: 0;
   }
 
   .hero-photo {
-    left: 8%;
+    position: relative;
+    inset: auto;
+    left: auto;
     right: auto;
-    width: 86%;
-    height: 520px;
+    width: 100%;
+    height: auto;
     transform: none;
+  }
+
+  .hero-photo img {
+    height: auto;
   }
 
   .collage {
     display: grid;
     gap: 20px;
     min-height: auto;
+    padding: 20px clamp(24px, 5vw, 76px) 70px;
   }
 
-  .photo-card,
+  .photo-card:not(.hero-photo),
   .radiator,
   .stone,
   .sinks,
@@ -487,7 +495,7 @@ h1 {
     transform: none;
   }
 
-  .photo-card img {
+  .photo-card:not(.hero-photo) img {
     height: auto;
   }
 
