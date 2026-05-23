@@ -21,7 +21,8 @@ body {
 }
 
 .page {
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   min-height: 100vh;
 }
 
@@ -35,14 +36,108 @@ body {
   padding: 42px clamp(24px, 5vw, 76px) 0;
 }
 
+.header-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
 .logo {
   width: clamp(150px, 19vw, 245px);
   height: auto;
 }
 
-nav {
+.logo-meta {
+  margin: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.logo-location {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.logo-meta-sep {
+  color: var(--muted);
+}
+
+.logo-established {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.header-contact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px 0;
+  max-width: min(720px, 72vw);
+  font-size: 11px;
+  letter-spacing: .04em;
+  text-transform: none;
+}
+
+.header-contact .contact-link:not(:last-child)::after {
+  content: "|";
+  margin: 0 clamp(10px, 2vw, 18px);
+  color: rgba(24, 24, 24, 0.28);
+  font-weight: 300;
+}
+
+.header-contact a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.header-contact a:hover {
+  color: var(--blue);
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-phone-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.contact-details .contact-phone-row {
+  justify-content: flex-end;
+}
+
+.contact-icon {
+  flex-shrink: 0;
+  font-size: 1.05em;
+  line-height: 1;
+}
+
+nav {
+  display: flex;
+  align-items: flex-start;
   gap: clamp(18px, 3vw, 48px);
   text-transform: uppercase;
   letter-spacing: .14em;
@@ -52,6 +147,10 @@ nav {
 nav a {
   color: var(--ink);
   text-decoration: none;
+}
+
+nav > a {
+  padding-top: 17px;
 }
 
 .nav-button {
@@ -117,6 +216,7 @@ h1 {
 
 .hero-art {
   position: relative;
+  z-index: 1;
   min-height: 720px;
 }
 
@@ -125,6 +225,15 @@ h1 {
   pointer-events: none;
   opacity: .72;
   mix-blend-mode: multiply;
+  z-index: 0;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect;
 }
 
 .brush-one {
@@ -136,18 +245,24 @@ h1 {
 
 .hero-photo {
   position: absolute;
-  right: -2%;
+  right: 1%;
   top: 0;
   width: min(640px, 86%);
   height: 720px;
+  margin: 0;
+  transform: rotate(-1.5deg);
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  clip-path: polygon(8% 0, 100% 0, 94% 100%, 0 96%);
-  box-shadow: 0 26px 70px rgba(0,0,0,.18);
 }
 
 .collage {
   position: relative;
-  min-height: 650px;
+  min-height: 980px;
   padding: 10px clamp(24px, 5vw, 76px) 70px;
 }
 
@@ -156,6 +271,13 @@ h1 {
   left: -110px;
   top: 20%;
   transform: rotate(24deg);
+}
+
+.brush-three {
+  width: 620px;
+  right: -80px;
+  top: 55%;
+  transform: rotate(-16deg);
 }
 
 .photo-card {
@@ -183,17 +305,6 @@ h1 {
   transform: rotate(-1.5deg);
 }
 
-.radiator::before {
-  content: "";
-  position: absolute;
-  top: -34px;
-  left: 38%;
-  width: 150px;
-  height: 48px;
-  background: rgba(199,184,158,.7);
-  transform: rotate(3deg);
-}
-
 .stone {
   left: 18%;
   top: 250px;
@@ -213,7 +324,17 @@ h1 {
   min-width: 380px;
   height: 500px;
   transform: rotate(2deg);
-  clip-path: polygon(0 7%, 100% 0, 100% 100%, 7% 94%);
+}
+
+.greenwhite {
+  left: 32%;
+  top: 480px;
+  width: 32vw;
+  max-width: 440px;
+  min-width: 280px;
+  height: 340px;
+  transform: rotate(-2.5deg);
+  z-index: 3;
 }
 
 .badge {
@@ -226,23 +347,20 @@ h1 {
   display: grid;
   place-items: center;
   text-align: center;
+  background: var(--blue);
+  border-radius: 50%;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
   color: white;
   text-transform: uppercase;
   letter-spacing: .18em;
   font-size: 10px;
+  font-weight: 600;
   line-height: 1.7;
-}
-
-.badge img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
 }
 
 .badge span {
   position: relative;
-  z-index: 2;
+  max-width: 88px;
 }
 
 .services {
@@ -287,14 +405,32 @@ h1 {
 }
 
 .contact p { margin: 0; }
-.contact a { color: white; }
+.contact a { color: white; text-decoration: none; }
+.contact .contact-link:hover { text-decoration: underline; }
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
 
 @media (max-width: 900px) {
   .site-header {
     align-items: center;
   }
 
-  nav a:not(.nav-button) {
+  .header-nav {
+    align-items: center;
+  }
+
+  .header-contact {
+    justify-content: center;
+    font-size: 10px;
+    max-width: 100%;
+  }
+
+  nav > a:not(.nav-button) {
     display: none;
   }
 
@@ -312,6 +448,7 @@ h1 {
     right: auto;
     width: 86%;
     height: 520px;
+    transform: none;
   }
 
   .collage {
@@ -323,7 +460,8 @@ h1 {
   .photo-card,
   .radiator,
   .stone,
-  .sinks {
+  .sinks,
+  .greenwhite {
     position: relative;
     inset: auto;
     width: 100%;
@@ -331,7 +469,6 @@ h1 {
     max-width: none;
     height: auto;
     transform: none;
-    clip-path: none;
   }
 
   .photo-card img {
