@@ -155,13 +155,18 @@ nav a {
   text-decoration: none;
 }
 
-nav > a {
+nav > a:not(.nav-button) {
   padding-top: 17px;
 }
 
 .nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   border: 1px solid var(--ink);
   padding: 17px 25px;
+  padding-left: calc(25px + 0.14em);
 }
 
 .hero {
@@ -436,6 +441,13 @@ h1 {
 
   nav > a:not(.nav-button) {
     display: none;
+  }
+
+  .nav-button {
+    white-space: nowrap;
+    line-height: 1;
+    padding: 14px 18px;
+    padding-left: calc(18px + 0.14em);
   }
 
   .hero {
