@@ -136,8 +136,9 @@ body {
 }
 
 .contact-icon-svg {
-  width: 1.05em;
-  height: 1.05em;
+  display: block;
+  width: 14px;
+  height: 14px;
 }
 
 nav {
